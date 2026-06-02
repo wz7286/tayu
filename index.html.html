@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>她语 · 婚后女性成长社区</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blush: #E8C5B0;
+    --terracotta: #C1775A;
+    --cream: #FAF5EF;
+    --ink: #2C1F1A;
+    --muted: #8A7060;
+    --sage: #8FA68C;
+    --gold: #C9A96E;
+    --warm-white: #FDF9F5;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans SC', sans-serif;
+    background: var(--warm-white);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 60px;
+    background: rgba(253,249,245,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(193,119,90,0.12);
+  }
+  .logo {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 22px; font-weight: 700;
+    color: var(--terracotta);
+    letter-spacing: 0.08em;
+  }
+  .logo span { color: var(--ink); font-weight: 300; }
+  nav ul { list-style: none; display: flex; gap: 40px; }
+  nav ul li a {
+    text-decoration: none; font-size: 14px; color: var(--muted);
+    letter-spacing: 0.05em; transition: color 0.3s;
+  }
+  nav ul li a:hover { color: var(--terracotta); }
+  .nav-cta {
+    background: var(--terracotta); color: #fff !important;
+    padding: 9px 22px; border-radius: 50px; font-size: 13px !important;
+    transition: background 0.3s, transform 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--ink) !important; transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 120px 60px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -60px; right: -80px;
+    width: 600px; height: 600px;
+    background: radial-gradient(ellipse, rgba(232,197,176,0.4) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: float 8s ease-in-out infinite;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; bottom: -40px; left: -60px;
+    width: 400px; height: 400px;
+    background: radial-gradient(ellipse, rgba(143,166,140,0.2) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: float 10s ease-in-out infinite reverse;
+  }
+  @keyframes float {
+    0%, 100% { transform: translate(0,0); }
+    50% { transform: translate(20px, -20px); }
+  }
+
+  .hero-text { position: relative; z-index: 2; animation: fadeUp 0.9s ease both; }
+  .hero-eyebrow {
+    font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--terracotta); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block; width: 30px; height: 1px; background: var(--terracotta);
+  }
+  h1 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(42px, 5vw, 68px);
+    font-weight: 700; line-height: 1.15;
+    color: var(--ink); margin-bottom: 28px;
+  }
+  h1 em {
+    font-style: normal; color: var(--terracotta);
+    position: relative;
+  }
+  h1 em::after {
+    content: '';
+    position: absolute; bottom: 2px; left: 0; right: 0; height: 3px;
+    background: var(--blush); z-index: -1;
+    transform: scaleX(0); transform-origin: left;
+    animation: underline 0.8s 0.6s ease forwards;
+  }
+  @keyframes underline { to { transform: scaleX(1); } }
+
+  .hero-sub {
+    font-size: 17px; line-height: 1.8; color: var(--muted);
+    max-width: 460px; margin-bottom: 44px;
+  }
+  .hero-actions { display: flex; gap: 16px; align-items: center; }
+  .btn-primary {
+    background: var(--terracotta); color: #fff;
+    padding: 15px 36px; border-radius: 50px; border: none;
+    font-family: 'Noto Sans SC', sans-serif; font-size: 15px;
+    cursor: pointer; transition: all 0.3s; letter-spacing: 0.05em;
+    box-shadow: 0 8px 30px rgba(193,119,90,0.35);
+  }
+  .btn-primary:hover { background: var(--ink); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(44,31,26,0.25); }
+  .btn-ghost {
+    color: var(--ink); font-size: 14px; font-family: 'Noto Sans SC', sans-serif;
+    background: none; border: none; cursor: pointer;
+    display: flex; align-items: center; gap: 8px;
+    padding: 15px 0; transition: color 0.3s;
+  }
+  .btn-ghost:hover { color: var(--terracotta); }
+  .btn-ghost span { font-size: 18px; }
+
+  /* Hero Visual */
+  .hero-visual { position: relative; z-index: 2; animation: fadeUp 0.9s 0.2s ease both; display: flex; justify-content: center; }
+  .card-stack { position: relative; width: 340px; height: 420px; }
+  .forum-card {
+    position: absolute; background: #fff;
+    border-radius: 20px; padding: 24px;
+    box-shadow: 0 20px 60px rgba(44,31,26,0.1);
+    transition: transform 0.3s;
+  }
+  .forum-card:nth-child(1) {
+    width: 300px; top: 0; left: 0;
+    transform: rotate(-4deg);
+    animation: cardHover 6s ease-in-out infinite;
+  }
+  .forum-card:nth-child(2) {
+    width: 300px; top: 80px; left: 40px;
+    transform: rotate(2deg);
+    animation: cardHover 6s 2s ease-in-out infinite;
+  }
+  .forum-card:nth-child(3) {
+    width: 280px; top: 170px; left: 20px;
+    transform: rotate(-1deg);
+    animation: cardHover 6s 4s ease-in-out infinite;
+  }
+  @keyframes cardHover {
+    0%, 100% { transform: rotate(var(--r, 0deg)) translateY(0); }
+    50% { transform: rotate(var(--r, 0deg)) translateY(-6px); }
+  }
+  .forum-card:nth-child(1) { --r: -4deg; }
+  .forum-card:nth-child(2) { --r: 2deg; }
+  .forum-card:nth-child(3) { --r: -1deg; }
+
+  .card-tag {
+    display: inline-block; font-size: 11px; letter-spacing: 0.1em;
+    padding: 4px 12px; border-radius: 50px; margin-bottom: 12px;
+    font-weight: 500;
+  }
+  .tag-pink { background: rgba(232,197,176,0.4); color: var(--terracotta); }
+  .tag-sage { background: rgba(143,166,140,0.25); color: #5a7a58; }
+  .tag-gold { background: rgba(201,169,110,0.25); color: #9a7a3a; }
+  .card-title { font-family: 'Noto Serif SC', serif; font-size: 15px; color: var(--ink); line-height: 1.5; margin-bottom: 10px; }
+  .card-meta { font-size: 12px; color: var(--muted); display: flex; gap: 12px; }
+  .card-avatar { width: 22px; height: 22px; border-radius: 50%; background: var(--blush); display: inline-block; vertical-align: middle; margin-right: 5px; }
+
+  /* Stats */
+  .hero-stats {
+    position: absolute; bottom: 60px; left: 60px; right: 60px;
+    display: flex; gap: 50px;
+    animation: fadeUp 0.9s 0.4s ease both;
+  }
+  .stat { border-left: 2px solid var(--blush); padding-left: 18px; }
+  .stat-num { font-family: 'Noto Serif SC', serif; font-size: 32px; font-weight: 700; color: var(--terracotta); }
+  .stat-label { font-size: 12px; color: var(--muted); letter-spacing: 0.05em; margin-top: 2px; }
+
+  /* ── FEATURES ── */
+  .section {
+    padding: 100px 60px;
+  }
+  .section-label {
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--terracotta); margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Noto Serif SC', serif; font-size: 38px; font-weight: 700;
+    color: var(--ink); max-width: 500px; line-height: 1.3; margin-bottom: 60px;
+  }
+  .features-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;
+  }
+  .feature-card {
+    background: #fff; border-radius: 24px; padding: 36px 32px;
+    border: 1px solid rgba(193,119,90,0.1);
+    transition: all 0.3s; cursor: default;
+    position: relative; overflow: hidden;
+  }
+  .feature-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--terracotta); transform: scaleX(0); transform-origin: left;
+    transition: transform 0.4s;
+  }
+  .feature-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(44,31,26,0.1); }
+  .feature-card:hover::before { transform: scaleX(1); }
+  .feature-icon {
+    font-size: 36px; margin-bottom: 20px; display: block;
+  }
+  .feature-card h3 {
+    font-family: 'Noto Serif SC', serif; font-size: 20px; color: var(--ink);
+    margin-bottom: 12px;
+  }
+  .feature-card p { font-size: 14px; color: var(--muted); line-height: 1.8; }
+
+  /* ── TOPICS ── */
+  .topics-section { background: var(--cream); }
+  .topics-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+  }
+  .topic-pill {
+    background: #fff; border-radius: 16px; padding: 24px 20px;
+    text-align: center; border: 1px solid rgba(193,119,90,0.12);
+    transition: all 0.3s; cursor: pointer;
+  }
+  .topic-pill:hover { background: var(--terracotta); }
+  .topic-pill:hover .topic-icon, .topic-pill:hover .topic-name, .topic-pill:hover .topic-count { color: #fff; }
+  .topic-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+  .topic-name { font-family: 'Noto Serif SC', serif; font-size: 16px; color: var(--ink); margin-bottom: 6px; display: block; }
+  .topic-count { font-size: 12px; color: var(--muted); }
+
+  /* ── POSTS PREVIEW ── */
+  .posts-section { background: var(--warm-white); }
+  .posts-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 30px; }
+  .post-featured {
+    background: linear-gradient(135deg, var(--terracotta), #A85940);
+    border-radius: 24px; padding: 48px 40px; color: #fff;
+    position: relative; overflow: hidden;
+  }
+  .post-featured::after {
+    content: '"'; font-family: 'Noto Serif SC', serif;
+    font-size: 200px; position: absolute; top: -40px; right: 20px;
+    opacity: 0.15; line-height: 1;
+  }
+  .post-featured .card-tag { background: rgba(255,255,255,0.2); color: #fff; }
+  .post-featured h3 { font-family: 'Noto Serif SC', serif; font-size: 24px; line-height: 1.5; margin: 16px 0 20px; }
+  .post-featured p { font-size: 14px; opacity: 0.8; line-height: 1.8; }
+  .post-featured .post-footer { display: flex; align-items: center; gap: 16px; margin-top: 30px; font-size: 13px; opacity: 0.7; }
+
+  .posts-list { display: flex; flex-direction: column; gap: 16px; }
+  .post-item {
+    background: #fff; border-radius: 16px; padding: 22px 24px;
+    border: 1px solid rgba(193,119,90,0.1); transition: all 0.3s; cursor: pointer;
+  }
+  .post-item:hover { transform: translateX(4px); border-color: var(--terracotta); }
+  .post-item .card-tag { margin-bottom: 8px; }
+  .post-item h4 { font-family: 'Noto Serif SC', serif; font-size: 15px; color: var(--ink); line-height: 1.5; margin-bottom: 8px; }
+  .post-item .post-footer { font-size: 12px; color: var(--muted); display: flex; gap: 12px; }
+
+  /* ── TESTIMONIAL ── */
+  .testimonial-section { background: var(--ink); padding: 100px 60px; }
+  .testimonial-section .section-label { color: var(--blush); }
+  .testimonial-section .section-title { color: #fff; }
+  .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .testimonial-card {
+    background: rgba(255,255,255,0.06); border-radius: 20px; padding: 32px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .testimonial-stars { color: var(--gold); font-size: 14px; margin-bottom: 16px; }
+  .testimonial-text { font-size: 15px; color: rgba(255,255,255,0.75); line-height: 1.8; margin-bottom: 24px; font-style: italic; }
+  .testimonial-author { display: flex; align-items: center; gap: 12px; }
+  .author-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--terracotta); display: flex; align-items: center; justify-content: center; font-family: 'Noto Serif SC', serif; font-size: 16px; color: #fff; }
+  .author-name { font-size: 14px; color: #fff; font-weight: 500; }
+  .author-info { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+
+  /* ── CTA ── */
+  .cta-section {
+    padding: 120px 60px; text-align: center;
+    background: var(--cream);
+    position: relative; overflow: hidden;
+  }
+  .cta-section::before {
+    content: '她语'; font-family: 'Noto Serif SC', serif;
+    font-size: 300px; font-weight: 700; color: rgba(193,119,90,0.05);
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    white-space: nowrap; pointer-events: none;
+  }
+  .cta-section h2 { font-family: 'Noto Serif SC', serif; font-size: 48px; color: var(--ink); margin-bottom: 16px; position: relative; }
+  .cta-section p { font-size: 16px; color: var(--muted); margin-bottom: 40px; position: relative; }
+  .cta-input-row { display: flex; gap: 12px; justify-content: center; position: relative; }
+  .cta-input {
+    width: 320px; padding: 16px 24px; border-radius: 50px;
+    border: 1.5px solid rgba(193,119,90,0.3); background: #fff;
+    font-family: 'Noto Sans SC', sans-serif; font-size: 14px; color: var(--ink);
+    outline: none; transition: border-color 0.3s;
+  }
+  .cta-input:focus { border-color: var(--terracotta); }
+  .cta-input::placeholder { color: var(--muted); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink); padding: 60px; color: rgba(255,255,255,0.5);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-logo { font-family: 'Noto Serif SC', serif; font-size: 20px; color: #fff; }
+  footer p { font-size: 13px; }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { color: rgba(255,255,255,0.4); text-decoration: none; font-size: 13px; transition: color 0.3s; }
+  .footer-links a:hover { color: #fff; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal { opacity: 0; transform: translateY(24px); transition: all 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    nav ul { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 100px 24px 200px; }
+    .hero-visual { display: none; }
+    .hero-stats { left: 24px; right: 24px; bottom: 40px; flex-wrap: wrap; gap: 24px; }
+    .section { padding: 70px 24px; }
+    .features-grid, .topics-grid, .testimonials-grid { grid-template-columns: 1fr; }
+    .posts-grid { grid-template-columns: 1fr; }
+    .cta-input-row { flex-direction: column; align-items: center; }
+    footer { flex-direction: column; gap: 20px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">她语<span> · 婚后成长社区</span></div>
+  <ul>
+    <li><a href="#">话题广场</a></li>
+    <li><a href="#">沟通课堂</a></li>
+    <li><a href="#">圆桌故事</a></li>
+    <li><a href="#">测评工具</a></li>
+    <li><a href="#" class="nav-cta">加入社区</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-eyebrow">婚后女性成长社区</div>
+    <h1>婚姻里，<br>你不必<em>孤单摸索</em></h1>
+    <p class="hero-sub">
+      这里是数万婚后女性共同的家。分享真实困惑，寻求温暖回应，学习沟通智慧——我们不给答案，但我们一起找到方向。
+    </p>
+    <div class="hero-actions">
+      <button class="btn-primary">免费加入社区</button>
+      <button class="btn-ghost"><span>▶</span> 听听她们的故事</button>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="card-stack">
+      <div class="forum-card">
+        <span class="card-tag tag-pink">婚姻沟通</span>
+        <div class="card-title">怎样跟另一半讨论钱的问题，<br>不让它变成吵架？</div>
+        <div class="card-meta"><span class="card-avatar"></span>138 人参与 · 今天</div>
+      </div>
+      <div class="forum-card">
+        <span class="card-tag tag-sage">情感共鸣</span>
+        <div class="card-title">婚后感觉自己消失了，<br>有同感的吗…</div>
+        <div class="card-meta"><span class="card-avatar"></span>261 人参与 · 昨天</div>
+      </div>
+      <div class="forum-card">
+        <span class="card-tag tag-gold">经验分享</span>
+        <div class="card-title">我用这个方法，让丈夫开始<br>主动沟通了 ✨</div>
+        <div class="card-meta"><span class="card-avatar"></span>94 人参与 · 2天前</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">68,000+</div><div class="stat-label">社区成员</div></div>
+    <div class="stat"><div class="stat-num">2,400+</div><div class="stat-label">真实话题</div></div>
+    <div class="stat"><div class="stat-num">96%</div><div class="stat-label">感受到被理解</div></div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section">
+  <div class="section-label">我们能为你做什么</div>
+  <div class="section-title">不只是倾诉，<br>更是成长</div>
+  <div class="features-grid">
+    <div class="feature-card reveal">
+      <span class="feature-icon">💬</span>
+      <h3>匿名话题广场</h3>
+      <p>自由表达真实的困惑与感受，无需担心被评判。每一个声音都值得被听见。</p>
+    </div>
+    <div class="feature-card reveal">
+      <span class="feature-icon">🌿</span>
+      <h3>沟通方法课堂</h3>
+      <p>由心理咨询师和婚姻研究者整理，实用的沟通技巧，帮你从"讲不通"到"被理解"。</p>
+    </div>
+    <div class="feature-card reveal">
+      <span class="feature-icon">✨</span>
+      <h3>圆桌真实故事</h3>
+      <p>她们和你经历过相似的时刻，又是如何走过来的？真实故事，真实力量。</p>
+    </div>
+    <div class="feature-card reveal">
+      <span class="feature-icon">🧭</span>
+      <h3>关系健康测评</h3>
+      <p>定期测评婚姻关系的各项维度，看见问题，也看见自己的成长轨迹。</p>
+    </div>
+    <div class="feature-card reveal">
+      <span class="feature-icon">👭</span>
+      <h3>同频小圈子</h3>
+      <p>找到与你处境相似的姐妹们，建立真正懂彼此的深度连接，不再孤单。</p>
+    </div>
+    <div class="feature-card reveal">
+      <span class="feature-icon">🎙️</span>
+      <h3>专家直播问答</h3>
+      <p>每周邀请心理专家、婚姻顾问进行互动直播，你的问题可以被认真回答。</p>
+    </div>
+  </div>
+</section>
+
+<!-- TOPICS -->
+<section class="section topics-section">
+  <div class="section-label">热门话题分类</div>
+  <div class="section-title">无论你在哪个阶段，<br>都有人在这里</div>
+  <div class="topics-grid">
+    <div class="topic-pill reveal">
+      <span class="topic-icon">🗣️</span>
+      <span class="topic-name">日常沟通</span>
+      <span class="topic-count">843 个帖子</span>
+    </div>
+    <div class="topic-pill reveal">
+      <span class="topic-icon">💰</span>
+      <span class="topic-name">财务关系</span>
+      <span class="topic-count">512 个帖子</span>
+    </div>
+    <div class="topic-pill reveal">
+      <span class="topic-icon">👨‍👩‍👧</span>
+      <span class="topic-name">原生家庭</span>
+      <span class="topic-count">677 个帖子</span>
+    </div>
+    <div class="topic-pill reveal">
+      <span class="topic-icon">💆‍♀️</span>
+      <span class="topic-name">自我空间</span>
+      <span class="topic-count">394 个帖子</span>
+    </div>
+    <div class="topic-pill reveal">
+      <span class="topic-icon">🛌</span>
+      <span class="topic-name">亲密关系</span>
+      <span class="topic-count">488 个帖子</span>
+    </div>
+    <div class="topic-pill reveal">
+      <span class="topic-icon">👶</span>
+      <span class="topic-name">要不要孩子</span>
+      <span class="topic-count">601 个帖子</span>
+    </div>
+    <div class="topic-pill reveal">
+      <span class="topic-icon">🧠</span>
+      <span class="topic-name">情绪管理</span>
+      <span class="topic-count">730 个帖子</span>
+    </div>
+    <div class="topic-pill reveal">
+      <span class="topic-icon">🌱</span>
+      <span class="topic-name">重新出发</span>
+      <span class="topic-count">299 个帖子</span>
+    </div>
+  </div>
+</section>
+
+<!-- POSTS PREVIEW -->
+<section class="section posts-section">
+  <div class="section-label">今日精选</div>
+  <div class="section-title">来自社区的真实声音</div>
+  <div class="posts-grid">
+    <div class="post-featured reveal">
+      <span class="card-tag">精华帖</span>
+      <h3>我花了三年，才学会不在愤怒时开口说话</h3>
+      <p>分享一个改变了我婚姻关系的小方法。当我们争吵时，我开始练习一件事：先离开那个房间，等心跳平稳下来再回来说话……</p>
+      <div class="post-footer">
+        <span>🌿 晴昼</span>
+        <span>· 婚后第6年</span>
+        <span>· 2,341 人收藏</span>
+      </div>
+    </div>
+    <div class="posts-list">
+      <div class="post-item reveal">
+        <span class="card-tag tag-pink">婚姻沟通</span>
+        <h4>丈夫总是"已阅不回"，我们还有救吗？</h4>
+        <div class="post-footer"><span>🧡 47条回复</span><span>· 3小时前</span></div>
+      </div>
+      <div class="post-item reveal">
+        <span class="card-tag tag-sage">情感共鸣</span>
+        <h4>婚后才发现我们的价值观差异有多大…</h4>
+        <div class="post-footer"><span>🧡 82条回复</span><span>· 5小时前</span></div>
+      </div>
+      <div class="post-item reveal">
+        <span class="card-tag tag-gold">经验分享</span>
+        <h4>推荐一本彻底改变我们沟通方式的书</h4>
+        <div class="post-footer"><span>🧡 156条回复</span><span>· 昨天</span></div>
+      </div>
+      <div class="post-item reveal">
+        <span class="card-tag tag-pink">原生家庭</span>
+        <h4>婆媳问题的根源，其实是另一件事？</h4>
+        <div class="post-footer"><span>🧡 203条回复</span><span>· 昨天</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonial-section">
+  <div class="section-label">她们说</div>
+  <div class="section-title" style="max-width:none;">来这里之前，<br>我以为只有我这样</div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card reveal">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">"终于找到一个不会被说'你太敏感了'的地方。这里的姐妹们真的懂，不用解释太多。"</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">云</div>
+        <div><div class="author-name">云淡风轻_2021</div><div class="author-info">婚后第4年 · 上海</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">"沟通课堂里的非暴力沟通练习，我和丈夫一起学，现在吵架次数少了一半。不是玩笑。"</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">桃</div>
+        <div><div class="author-name">三月桃花</div><div class="author-info">婚后第7年 · 成都</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">"在这里看到别人走过的路，我知道我的婚姻问题是有解的。这个信念本身就给了我很大力量。"</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">阮</div>
+        <div><div class="author-name">阮阮不慌</div><div class="author-info">婚后第2年 · 北京</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>加入她语</h2>
+  <p>免费注册，立刻开始你的第一个话题</p>
+  <div class="cta-input-row">
+    <input class="cta-input" type="email" placeholder="输入你的邮箱地址">
+    <button class="btn-primary">开始我的旅程 →</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">她语</div>
+  <p>© 2026 她语社区 · 为婚后女性而建</p>
+  <div class="footer-links">
+    <a href="#">关于我们</a>
+    <a href="#">社区规范</a>
+    <a href="#">隐私政策</a>
+    <a href="#">联系我们</a>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Topic pill hover
+  document.querySelectorAll('.topic-pill').forEach(pill => {
+    pill.addEventListener('mouseenter', () => {
+      pill.style.transform = 'scale(1.04)';
+    });
+    pill.addEventListener('mouseleave', () => {
+      pill.style.transform = '';
+    });
+  });
+
+  // CTA button ripple
+  document.querySelector('.btn-primary').addEventListener('click', function(e) {
+    const input = document.querySelector('.cta-input');
+    if (!input.value) {
+      input.style.borderColor = 'var(--terracotta)';
+      input.focus();
+      input.placeholder = '请先输入邮箱 ✨';
+      setTimeout(() => input.placeholder = '输入你的邮箱地址', 2000);
+    }
+  });
+</script>
+</body>
+</html>
